@@ -359,6 +359,18 @@ h3 { font-size: 1.02rem; font-weight: 600; }
   font-size: 0.8rem; color: var(--grey-4);
 }
 .wf-field .wf-input--area { height: 110px; align-items: flex-start; padding-top: 12px; }
+.wf-field .wf-input--real {
+  border-style: solid;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  width: 100%;
+  resize: vertical;
+}
+.wf-field .wf-input--real:focus { outline: none; border-color: var(--orange); }
+.wf-btn[disabled] { opacity: 0.6; cursor: default; }
+button.wf-btn { cursor: pointer; font: inherit; }
 .wf-form__note { grid-column: 1 / -1; font-size: 0.75rem; color: var(--grey-4); }
 
 /* ---------- cta band ---------- */
