@@ -19,6 +19,7 @@ npm run build   # production build
 - **Interactive stack explorer** on Home and AI Platform / Stack — each layer routes to its page (checklist requirement).
 - **Explore → Learn → Trust → Talk** journey wired through cross-links and the persistent conversion CTA.
 - Wireframe annotations (`[square-bracket labels]`) mark content pending approval: partner logos, model specs, leadership bios, industries, legal wording, CRM/form destinations.
+- **Analytics stubs** (`components/Analytics.jsx`): gtag (GA4) and Microsoft Clarity load only when `NEXT_PUBLIC_GA_ID` / `NEXT_PUBLIC_CLARITY_ID` are set (see `.env.example`). Until then, no-op stubs keep `window.gtag` / `window.clarity` callable and a `trackEvent()` helper is exported for approved conversion events — so no unapproved trackers ship in the wireframe.
 
 ## Deliberately out of scope (wireframe stage)
 
