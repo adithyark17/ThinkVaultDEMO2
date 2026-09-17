@@ -1,9 +1,19 @@
 import { PAGES } from "@/components/sitemap";
-import { PageHero, Section, CardGrid, CtaBand, Box } from "@/components/Wire";
+import { Section, CardGrid, CtaBand, Box } from "@/components/Wire";
+import { sanityFetch, QUERIES } from "@/lib/sanity";
 
 export const metadata = { title: "Case Studies — Wireframe" };
+export const revalidate = 60;
 
-export default function CaseStudies() {
+const FALLBACK = [
+  { title: "[Case study]", summary: null },
+  { title: "[Case study]", summary: null },
+  { title: "[Case study]", summary: null },
+];
+
+export default async function CaseStudies() {
+  const { data: studies, live } = await sanityFetch(QUERIES.caseStudies, FALLBACK);
+
   return (
     <>
       <section className="wf-page-hero">
@@ -22,15 +32,19 @@ export default function CaseStudies() {
       <Section
         kicker="Template"
         title="Case study grid"
-        note="[CMS template built now per checklist; content launches later — no customer names/logos without written approval]"
+        note={
+          live
+            ? "[Sanity CMS — approved case studies only]"
+            : "[Sanity CMS template wired (approved-only filter); content launches later — no customer names/logos without written approval]"
+        }
       >
         <CardGrid
           cols={3}
-          items={[
-            { title: "[Case study]", media: "[Cover — coming soon]" },
-            { title: "[Case study]", media: "[Cover — coming soon]" },
-            { title: "[Case study]", media: "[Cover — coming soon]" },
-          ]}
+          items={studies.map((s) => ({
+            title: s.title,
+            media: s.imageUrl ? "[Cover ✓]" : "[Cover — coming soon]",
+            desc: s.summary ?? undefined,
+          }))}
         />
       </Section>
 

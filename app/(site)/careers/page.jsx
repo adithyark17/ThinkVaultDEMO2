@@ -1,9 +1,20 @@
 import { PAGES } from "@/components/sitemap";
 import { PageHero, Section, CardGrid, Steps, Split, CtaBand, Box } from "@/components/Wire";
+import { sanityFetch, QUERIES } from "@/lib/sanity";
 
 export const metadata = { title: "Careers — Wireframe" };
+export const revalidate = 60;
 
-export default function Careers() {
+const FALLBACK_JOBS = [
+  { title: "[Role title]", team: null },
+  { title: "[Role title]", team: null },
+  { title: "[Role title]", team: null },
+  { title: "[Role title]", team: null },
+];
+
+export default async function Careers() {
+  const { data: jobs, live } = await sanityFetch(QUERIES.jobs, FALLBACK_JOBS);
+
   return (
     <>
       <PageHero page={PAGES.careers} cta={false} />
@@ -31,14 +42,20 @@ export default function Careers() {
       <Section
         kicker="Open roles"
         title="Current openings"
-        note="[Jobs CMS + application workflow + resume upload per checklist]"
+        note={
+          live
+            ? "[Sanity jobs CMS — live openings]"
+            : "[Sanity jobs CMS wired + application workflow + resume upload per checklist — placeholders shown]"
+        }
       >
         <div className="wf-index">
-          {["[Role title]", "[Role title]", "[Role title]", "[Role title]"].map((role, i) => (
-            <a key={i} href="#">
+          {jobs.map((job, i) => (
+            <a key={i} href={job.applyUrl || "#"}>
               <span className="num">{String(i + 1).padStart(2, "0")}</span>
-              <span className="title">{role}</span>
-              <span className="desc">[Team · Type · Apply]</span>
+              <span className="title">{job.title}</span>
+              <span className="desc">
+                {[job.team ?? "[Team]", job.type ?? "[Type]", job.location ?? "Apply"].join(" · ")}
+              </span>
               <span className="arrow">→</span>
             </a>
           ))}

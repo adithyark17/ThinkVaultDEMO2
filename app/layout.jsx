@@ -1,7 +1,6 @@
 import "./globals.css";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import Analytics from "@/components/Analytics";
+import CollectChat from "@/components/CollectChat";
 
 export const metadata = {
   title: "ThinkVault — Wireframe",
@@ -13,9 +12,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <Analytics />
-        <Nav />
-        <main>{children}</main>
-        <Footer />
+        <CollectChat />
+        {children}
       </body>
     </html>
   );
